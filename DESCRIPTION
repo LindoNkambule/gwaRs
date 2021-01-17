@@ -1,0 +1,19 @@
+Package: gwaRs
+Title: Manhattan, Q-Q, and PCA plots using ggplot2
+Version: 0.1.0
+Authors@R: 
+    person("Lindokuhle", "Nkambule",
+           role = c("aut", "cre"),
+           email = "lindonkambule116@gmail.com")
+Description: gwaRs: an R package for generating Manhattan, Q-Q, and PCA plots from GWAS and PCA results using ggplot2.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
