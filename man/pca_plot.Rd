@@ -10,12 +10,13 @@ pca_plot(
   yComponent = "PC2",
   legendPos = "right",
   soft = "PLINK",
-  colPalette = "Accent"
+  colPalette = "Accent",
+  title = NULL
 )
 }
 \arguments{
 \item{data}{PLINK pca or EIGENSTRAT smartpca output,
-(or any tab-delimited file or data.frame with the same format as PLINK pca or EIGENSTRAT smartpca output}
+(or any tab-delimited file or data.frame with the same format as PLINK pca or EIGENSTRAT smartpca output)}
 
 \item{xComponent}{A character vector indicating the principal component value to use for the x-axis.
 Default is "PC1"}
@@ -29,6 +30,8 @@ Default is "PC2"}
 If you have a tab-delimited file or data.frame with the same format as EIGENSTRAT output, use "EIGENSTRAT"}
 
 \item{colPalette}{A character vector indicating the color palette to use. Default is "Accent".}
+
+\item{title}{A string denoting the title to use for the plot. Default is 'PCA Plot'}
 }
 \value{
 A PCA plot.
