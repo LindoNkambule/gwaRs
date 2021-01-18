@@ -11,6 +11,7 @@
 #' @param title A string denoting the title to use for the plot. Default is 'Q-Q Plot'
 #'
 #' @importFrom  data.table fread
+#' @importFrom  stats median
 #' @import ggplot2
 #'
 #' @author Lindokuhle Nkambule
@@ -76,7 +77,7 @@ function(data, point_col = "black", diag_col = "red", diag_line = "solid", title
 
   }else{
 
-    gc <-median(data$CHISQ)/0.455
+    gc <- stats::median(data$CHISQ)/0.455
 
     qqplot <- ggplot2::ggplot(data, aes(x = log_exp, y = log_obs)) +
       geom_point(size = 0.5, color = point_col) + geom_abline(color = diag_col, linetype = diag_line) +
