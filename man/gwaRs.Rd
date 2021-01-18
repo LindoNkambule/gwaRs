@@ -8,6 +8,14 @@
 \description{
 A package for creating Manhattan, Q-Q, and PCA plots for GWAS data.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/LindoNkambule/gwaRs}
+  \item Report bugs at \url{https://github.com/LindoNkambule/gwaRs/issues}
+}
+
+}
 \author{
-Lindokuhle Nkambule \email{lindonkambule@gmail.com}
+Lindokuhle Nkambule \email{lindonkambule116@gmail.com}
 }
