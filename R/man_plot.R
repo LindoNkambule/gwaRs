@@ -25,6 +25,7 @@
 #' @import dplyr
 #' @import ggplot2
 #' @import ggrepel
+#' @import scales
 #' @import tidyr
 #'
 #' @author Lindokuhle Nkambule
@@ -41,6 +42,9 @@ function(data, chromCol=c("gray44", "black"), genomewideline=-log10(5e-8),
                      suggestiveline=-log10(1e-5), chromosome = "ALL",
                      annotatePval=FALSE, annotateSNP=NULL, annotateCol="red",
                      highlight=NULL, highlightCol="green3", title=NULL){
+
+  # binding for global variable(s)
+  BP <- BPcum <- CHR <- chr_len <- P <- SNP <- tot <- . <- NULL
 
   # error handling
   #1. input data type
@@ -283,7 +287,7 @@ function(data, chromCol=c("gray44", "black"), genomewideline=-log10(5e-8),
       ##
 
       scale_y_continuous(expand = c(0,0), limits = c(0, ylim)) +
-      scale_x_continuous(label = axis_label$CHR, breaks = axis_label$center) +
+      scale_x_continuous(labels = axis_label$CHR, breaks = axis_label$center) +
       scale_color_manual(values = rep(chromCol, nCHR)) +
       scale_size_continuous(range = c(0.5,3)) +
       labs(x = x_lab, y = bquote(-log[10]~italic((p)))) +
