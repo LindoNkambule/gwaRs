@@ -17,7 +17,8 @@
 #' @param colPalette A character vector indicating the color palette to use. Default is "Accent".
 #' @param title A string denoting the title to use for the plot. Default is 'PCA Plot'
 #'
-#' @importFrom  data.table fread
+#' @importFrom data.table fread
+#' @importFrom grDevices colorRampPalette
 #' @import dplyr
 #' @import ggplot2
 #' @import RColorBrewer
@@ -34,6 +35,9 @@
 pca_plot <-
 function(data, xComponent = "PC1", yComponent = "PC2", legendPos = "right", soft = "PLINK",
          colPalette = "Accent", title = NULL){
+
+  # binding for global variable(s)
+  POP <- NULL
 
   input_type <- typeof(data)
 
@@ -69,16 +73,16 @@ function(data, xComponent = "PC1", yComponent = "PC2", legendPos = "right", soft
   # total number of populations
   number_of_populations <- nrow(data.frame(table(eigenvec_file$POP)))
 
-  # colour palette for inputs with many populations
+  # color palette for inputs with many populations
   colourCount = length(unique(eigenvec_file$POP))
 
   switch(colPalette,
-         Paired = {getPalette = colorRampPalette(brewer.pal(12, "Paired"))},
-         Set1 = {getPalette = colorRampPalette(brewer.pal(9, "Set1"))},
-         Set2 = {getPalette = colorRampPalette(brewer.pal(8, "Set2"))},
-         Set3 = {getPalette = colorRampPalette(brewer.pal(12, "Set3"))},
-         Dark2 = {getPalette = colorRampPalette(brewer.pal(8, "Dark2"))},
-         Accent = {getPalette = colorRampPalette(brewer.pal(8, "Accent"))}
+         Paired = {getPalette = grDevices::colorRampPalette(brewer.pal(12, "Paired"))},
+         Set1 = {getPalette = grDevices::colorRampPalette(brewer.pal(9, "Set1"))},
+         Set2 = {getPalette = grDevices::colorRampPalette(brewer.pal(8, "Set2"))},
+         Set3 = {getPalette = grDevices::colorRampPalette(brewer.pal(12, "Set3"))},
+         Dark2 = {getPalette = grDevices::colorRampPalette(brewer.pal(8, "Dark2"))},
+         Accent = {getPalette = grDevices::colorRampPalette(brewer.pal(8, "Accent"))}
   )
 
   if(is.null(title)){
