@@ -1,6 +1,6 @@
 Type: Package
 Package: gwaRs
-Title: Manhattan, Q-Q, and PCA Plots using ggplot2
+Title: Manhattan, Q-Q, and PCA Plots using 'ggplot2'
 Version: 0.1.0
 Authors@R:
     person(given = "Lindokuhle",
@@ -8,8 +8,8 @@ Authors@R:
           role = c("aut", "cre"),
           email = "lindonkambule116@gmail.com",
           comment = c(ORCID = "0000-0002-5682-2834"))
-Description: an R package for generating Manhattan, Q-Q, and PCA plots from GWAS and PCA results using ggplot2.
-License: MIT + file LICENSE
+Description: an R package for generating Manhattan, Q-Q, and PCA plots from GWAS and PCA results using 'ggplot2'.
+License: MIT + file LICENCE
 Encoding: UTF-8
 LazyData: true
 Imports:
