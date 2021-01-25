@@ -179,8 +179,40 @@ man_plot(gwasData, chromosome = 1)
 ```
 
 ![figure-6 plot](figures/figure-6.png)
+## 3. Mirrored Manhattan Plots
+If you have two traits and want to plot the results on a single plot, you can use the `mirrored_man_plot` function to plot a mirrored
+Manhattan plot. Currently, the function takes a tab-delimited text file or a data.frame with the following compulsory columns: "CHR",
+"SNP", "BP", "P", "Trait". You can use the gwasData to test this function.
 
-## 3. Q-Q plots
+```r
+library(gwaRs)
+f1 <- gwasData[, c("CHR", "SNP", "BP", "P")]
+f2 <- gwasData[, c("CHR", "SNP", "BP", "P")]
+f1$Trait <- "trait1"
+f2$Trait <- "trait2"
+mirroredData <- rbind(f1, f2)
+
+mirrored_man_plot(mirroredData, trait1 = "trait1", trait2 = "trait2")
+```
+
+![figure-11 plot](figures/figure-11.png)
+
+You can also change the graphical parameters. Each trait has its own graphical parameters, denoted with either trait1 or trait1 in
+the function argument. For example, if you want to annotate trait1 SNPs by p-value, you can pass the `annotate_trait1_pval`
+argument. There are other arguments such as `genomewideline_trait1/2`, `suggestiveline_trait1/2` for modifying the plot.
+
+```r
+mirrored_man_plot(mirroredData1, trait1 = "trait1", trait2 = "trait2",
+                  annotate_trait1_pval = 0.000005, annotate_trait2_pval = 0.0000005,
+                  genomewideline_trait1 = -log10(5e-08), highlight = highlightSNPS,
+                  suggestiveline_trait1 = -log10(1e-06), suggestiveline_trait2 = -log10(1e-06),
+                  suggestiveline_color = "black", suggestiveline_type = "solid",
+                  trait2_chromCols = c("seagreen2", "seagreen4"), highlightcolor = "blue")
+```
+
+![figure-12 plot](figures/figure-12.png)
+
+## 4. Q-Q plots
 To create a Q-Q plot, simply supply a PLINK assoc output, tab-delimited, or a data.frame with "P" column to the qq_plot() function.
 
 ```r
@@ -198,7 +230,7 @@ qq_plot(gwasData, title = "GWAS Q-Q Plot", point_col = "blue",
 
 ![figure-8 plot](figures/figure-8.png)
 
-## 4. PCA plots
+## 5. PCA plots
 To create a PCA plot, simply supply PLINK pca output, or EIGENSTRAT smartpca output, or any tab-delimited file or data.frame with the same format as PLINK pca or EIGENSTRAT smartpca output.
 
 ```r
