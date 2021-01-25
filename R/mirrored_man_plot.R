@@ -53,7 +53,7 @@
 #' @return A Mirrored Manhattan plot for two traits.
 #'
 #' @examples
-#' mirrored_man_plot(inputData)
+#' mirrored_man_plot()
 #'
 #' @export
 
