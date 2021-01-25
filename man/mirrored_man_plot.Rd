@@ -101,7 +101,9 @@ Create a Mirrored Manhattan Plot from a tab-delimited file or data frame with th
 columns: "CHR", "SNP", "BP", "P", "Trait" .
 }
 \examples{
-mirrored_man_plot()
+\dontrun{
+mirrored_man_plot(inputData)
+}
 
 }
 \author{
