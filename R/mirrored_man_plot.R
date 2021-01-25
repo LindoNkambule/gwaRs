@@ -53,7 +53,9 @@
 #' @return A Mirrored Manhattan plot for two traits.
 #'
 #' @examples
-#' mirrored_man_plot()
+#' \dontrun{
+#' mirrored_man_plot(inputData)
+#' }
 #'
 #' @export
 
