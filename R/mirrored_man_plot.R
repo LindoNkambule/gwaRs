@@ -72,7 +72,7 @@ mirrored_man_plot <-
            suggestiveline_type = "dashed", suggestiveline_color = "blue"){
 
   # binding for global variable(s)
-  BP <- BPcum <- CHR <- chr_len <- P <- SNP <- tot <- . <- NULL
+  BP <- BPcum <- CHR <- chr_len <- P <- SNP <- tot <- Trait <- x <- y <- label <- . <- NULL
 
   # error handling
   #1. input data type
