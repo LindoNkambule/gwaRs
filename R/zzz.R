@@ -26,7 +26,7 @@ NULL
 
 gwaRsWelcomeMessage <- function(){
 
-  cat("Thank you for using gwaRs (version ",utils::packageDescription("ggplot2")$Version, ")\n",
+  cat("Thank you for using gwaRs (version ",utils::packageDescription("gwaRs")$Version, ")\n",
       "To access the overall documentation, go to: https://cran.r-project.org/web/packages/gwaRs/vignettes/gwaRs.html\n",
       "Suggestions and bug-reports can be submitted at: https://github.com/LindoNkambule/gwaRs/issues\n",
       "\n",
