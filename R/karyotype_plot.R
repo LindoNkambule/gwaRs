@@ -1,12 +1,34 @@
-library(gwaRs)
-library(dplyr)
-library(ggplot2)
-library(scales)
-library(stats)
+#' Karyotype Plot
+#'
+#' Creates a Karyotype plot
+#'
+#' Creates a SNP Karyotype or Density plot from an R dataframe with "CHR" and "BP" columns.
+#'
+#' @param data A data.frame with "CHR" and "BP"columns.
+#' @param density.col A character vector with colors to use for gradients.
+#' @param window.size A double precision numeric value indicating the window size.
+#' @param title A string denoting the title to use for the plot. Default is 'Manhattan Plot'
+#'
+#' @importFrom stats median setNames
+#' @import dplyr
+#' @import ggplot2
+#' @import scales
+#'
+#' @author Lindokuhle Nkambule
+#'
+#' @return A SNP Karyotype plot.
+#'
+#' @examples
+#' karyotype_plot(gwasData)
+#'
+#' @export
 
 karyotype_plot <-
-  function(data, density.col = c("darkgreen","yellow","red"),
-           window.size = 1e6){
+  function(data, density.col=c("darkgreen","yellow","red"),
+           window.size=1e6, title=NULL){
+
+    # binding for global variable(s)
+    BP <- CHR <- chromStart <- cont <- window <- . <- NULL
 
     # error handling
     colheaders <- c("CHR", "BP")
@@ -121,6 +143,12 @@ karyotype_plot <-
       title_window <- bin/1e6
     }
 
+    if(is.null(title)){
+      plt_title <- base::paste("The number of SNPs within ", title_window, "Mb window size", sep="")
+    }else{
+      plt_title<- title
+    }
+
     # This is for making sure we always have 10 y axis/BP labels
     y_axis_labs_breaks <- base::round(seq(0, max(merged_data$chromEnd), by = max(merged_data$chromEnd)/10),0)
 
@@ -145,7 +173,7 @@ karyotype_plot <-
                              values=col.gradient,
                              space = "Lab", na.value = "grey80") +
 
-      labs(title = base::paste("The number of SNPs within ", title_window, "Mb window size", sep="")) +
+      labs(title = plt_title) +
       # black & white color theme
       theme(plot.title = element_text(colour = "black", face = "bold", hjust = 0.5),
             axis.text.x = element_text(colour = "black"),
@@ -161,16 +189,3 @@ karyotype_plot <-
     karyotype_plt
 
 }
-
-karyotype_plot(gwasData)
-
-
-library("CMplot")
-data(pig60K)
-data_renamed <- pig60K %>% rename(CHR = Chromosome, BP = Position) %>% select(CHR, BP)
-karyotype_plot(data_renamed, window.size = 1e1)
-
-
-CMplot(pig60K,type="p",plot.type="d",bin.size=1e6,chr.den.col=c("darkgreen", "yellow", "red"),file="jpg",memo="",dpi=300,
-       main="illumilla_60K",file.output=FALSE,verbose=TRUE,width=9,height=6)
-
