@@ -247,3 +247,12 @@ pca_plot(pcaData, xComponent = "PC3", yComponent = "PC4", legendPos = "left",
 ```
 
 ![figure-10 plot](figures/figure-10.png)
+
+## 6. Karyotype plots
+If you want to see how density of SNPs in a specific window size, you can use the `karyotype_plot` function.
+
+```r
+karyotype_plot(gwasData)
+```
+
+![figure-13 plot](figures/figure-13.png)
