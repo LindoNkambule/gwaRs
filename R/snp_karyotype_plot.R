@@ -8,8 +8,6 @@ karyotype_plt <- function(data, density.col = c("darkgreen","yellow","red"),
   plt_data <- data %>% dplyr::select(CHR, BP) %>% mutate(chromStart = BP, chromEnd = BP) %>%
     select(-BP) %>% dplyr::rename(chrom = CHR)
 
-  x_label <-
-
   plt_data$chrom <- as.character(plt_data$chrom)
 
   chroms_in_data <- unique(plt_data$chrom)
@@ -37,7 +35,6 @@ karyotype_plt <- function(data, density.col = c("darkgreen","yellow","red"),
 
   # create an ordered factor level to use for the chromosomes in all the datasets
   sizes <- sizes %>% dplyr::mutate(chrom_order = paste0("chr", chrom, sep=""))
-  # sizes$chromosome = as.numeric(sizes$chromosome)
 
   chrom_order <- sizes[['chrom_order']]
   chrom_order_renames <- c("chr23", "chr24", "chr25")
@@ -64,7 +61,8 @@ karyotype_plt <- function(data, density.col = c("darkgreen","yellow","red"),
   bin <- window.size
 
   formatterbin <- function(x){
-    paste(round(x/bin, digits = 0), "Mb", sep = "")
+    paste(round(x/1e6, digits = 0), "Mb", sep = "")
+    # x/bin
   }
 
   # create a window column so we can merge df with window_cont_df
@@ -76,7 +74,6 @@ karyotype_plt <- function(data, density.col = c("darkgreen","yellow","red"),
                          summarise(cont = n()))
 
   merged_data <- merge(plt_data, window_cont_df, by=c("chrom","window"))
-  # merged_data$chrom <- as.integer(merged_data$chrom)
 
   # This is for making sure that chromosomes like X, Y, M are plotted based on the number of chromosome
   # and not on x = 23, 24, 25 respectively. Doing this because some data might be from chrom1-18, then X, Y
@@ -99,26 +96,22 @@ karyotype_plt <- function(data, density.col = c("darkgreen","yellow","red"),
   }
 
   # set up scale for gradient
-  # col.gradient <- rescale(merged_data$cont, to = c(1, max(merged_data$cont) + 2))
   if((nrow(merged_data) %% 2) == 0) {
     middle_num <- median(rescale(merged_data$cont))
   } else {
     middle_num <- mean(rescale(merged_data$cont))
   }
-
   max_num <- max(rescale(merged_data$cont))
   col.gradient <- c(0, middle_num, max_num)
 
-  if ((window.size/1e6 < 0.001) || (window.size/1e6 > 100000)) {
-    title_window <- formatC(window.size/1e6,format="e")
+  if ((bin/1e6 < 0.001) || (bin/1e6 > 100000)) {
+    title_window <- formatC(bin/1e6,format="e", digits=0)
   }else{
-    title_window <- window.size/1e6
+    title_window <- bin/1e6
   }
 
-  # merged_data <- as.data.frame(merged_data %>% group_by(chrom) %>% mutate(barmax = max(chromEnd, na.rm = T)))
-
-  # This is for making suer we always have 10 y axis/BP labels
-  y_axis_labs_breaks <- round(seq(0, max(merged_data$chromEnd), by = max(merged_data$chromEnd)/10),1)
+  # This is for making sure we always have 10 y axis/BP labels
+  y_axis_labs_breaks <- round(seq(0, max(merged_data$chromEnd), by = max(merged_data$chromEnd)/10),0)
 
   ggplot(data = merged_data) +
     # geom_bar(stat = "identity", x = chrom, y = barmax, fill = "gray8", alpha = 0.2, width=0.4) +
@@ -134,18 +127,14 @@ karyotype_plt <- function(data, density.col = c("darkgreen","yellow","red"),
     scale_x_reverse(name = "chromosome", expand = c(0.01, 0),
                     breaks = seq(1, length(chroms_in_data), by = 1), labels = names(chrom_key))  +
 
-    # give the appearance of a discrete axis with chrom labels
-    # rev(names(chrom_key)
-    # scale_x_discrete(name = "chromosome", limits = names(chrom_key)) +
-
     # convert the y scale to specified bin value
     scale_y_continuous(labels = formatterbin, expand = c(0.001, 0),
                        breaks = y_axis_labs_breaks, position = "right") +
     scale_colour_gradientn(colours=density.col,
                            values=col.gradient,
-                           space = "Lab", na.value = "grey8") +
+                           space = "Lab", na.value = "grey80") +
 
-    labs(title = paste("The number of SNPs within ", window.size/1e6, "Mb window size", sep="")) +
+    labs(title = paste("The number of SNPs within ", title_window, "Mb window size", sep="")) +
     # black & white color theme
     theme(plot.title = element_text(colour = "black", face = "bold", hjust = 0.5),
           axis.text.x = element_text(colour = "black"),
@@ -165,9 +154,9 @@ karyotype_plt(gwasData)
 library("CMplot")
 data(pig60K)
 data_renamed <- pig60K %>% rename(CHR = Chromosome, BP = Position) %>% select(CHR, BP)
-karyotype_plt(data_renamed)
+karyotype_plt(data_renamed, window.size = 1e1)
 
 
-CMplot(pig60K,type="p",plot.type="d",bin.size=1e10,chr.den.col=c("darkgreen", "yellow", "red"),file="jpg",memo="",dpi=300,
+CMplot(pig60K,type="p",plot.type="d",bin.size=1e6,chr.den.col=c("darkgreen", "yellow", "red"),file="jpg",memo="",dpi=300,
        main="illumilla_60K",file.output=FALSE,verbose=TRUE,width=9,height=6)
 
