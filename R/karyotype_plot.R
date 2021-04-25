@@ -107,6 +107,10 @@ karyotype_plot <-
                                       dplyr::summarise(cont = n(), .groups = 'drop'))
 
     merged_data <- base::merge(plt_data, window_cont_df, by=c("chrom","window"))
+    bar_coords <- as.data.frame(merged_data %>% dplyr::group_by(chrom) %>%
+                                  dplyr::summarise(yendseg = max(chromEnd), .groups = 'drop') %>%
+                                  dplyr::mutate(ystartseg = 0))
+    merged_data <- base::merge(merged_data, bar_coords, by=c("chrom"))
 
     # This is for making sure that chromosomes like X, Y, M are plotted based on the number of chromosome
     # and not on x = 23, 24, 25 respectively. Doing this because some data might be from chrom1-18, then X, Y
@@ -159,8 +163,12 @@ karyotype_plot <-
                     #ymax = size, ymin = 0),
                 #color = NA, fill = NA) +
 
-      geom_segment(aes(x = as.numeric(chrom) - 0.19, y = chromStart,
-                       xend = as.numeric(chrom) + 0.19, yend = chromStart, colour = as.integer(cont))) +
+      # add background bar for chromosome
+      geom_segment(aes(x = as.numeric(chrom), y = ystartseg,
+                       xend = as.numeric(chrom), yend = yendseg, size=0.5), colour="gray85", show.legend = FALSE) +
+      # add bars for SNPs
+      geom_segment(aes(x = as.numeric(chrom) - 0.155, y = chromStart,
+                       xend = as.numeric(chrom) + 0.155, yend = chromStart, colour = as.integer(cont))) +
       coord_flip() +
 
       scale_x_reverse(name = "chromosome", expand = c(0.01, 0),
