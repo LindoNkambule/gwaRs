@@ -28,7 +28,7 @@ Depends:
     R (>= 2.10)
 Suggests:
     knitr,
-    markdown
+    rmarkdown
 VignetteBuilder: knitr
 URL: https://github.com/LindoNkambule/gwaRs
 BugReports: https://github.com/LindoNkambule/gwaRs/issues
