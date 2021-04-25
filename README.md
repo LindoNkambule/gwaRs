@@ -5,6 +5,7 @@
 [![R build
 status](https://github.com/LindoNkambule/gwaRs/workflows/R-CMD-check/badge.svg)](https://github.com/LindoNkambule/gwaRs)
 [![License: MIT](https://img.shields.io/badge/License-MIT%20-blue.svg)](https://github.com/LindoNkambule/gwaRs/blob/main/LICENSE)
+![](http://cranlogs.r-pkg.org/badges/grand-total/gwaRs)
 
 an R package for generating Manhattan, Q-Q, and PCA plots from GWAS and PCA results using ggplot2
 
